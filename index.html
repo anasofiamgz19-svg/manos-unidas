@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manos Unidas App</title>
+<meta name="description" content="Tiendita digital solidaria de Manzanares, Caldas: artesanías, arte escolar y productos hechos a mano.">
+<meta name="theme-color" content="#0f6b6b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Manos Unidas">
+<style>
+:root{--ink:#1e2b2b;--indigo:#0f6b6b;--maiz:#ffc23d;--guayaba:#e4572e;--menta:#ff7a1a;--paper:#fff8ef;--card:#fff;--line:#ecd9c3;--r:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font:18px/1.55 "Avenir Next","Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--paper);padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3{line-height:1.12;margin:0 0 .5em;font-weight:800;letter-spacing:-.01em}
+h1{font-size:clamp(2.3rem,7vw,4rem)}h2{font-size:clamp(1.7rem,4.5vw,2.4rem)}h3{font-size:1.15rem}
+a{color:var(--indigo)}
+:focus-visible{outline:3px solid var(--guayaba);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{border:0;border-radius:999px;padding:.7em 1.3em;font-weight:700;cursor:pointer;background:var(--indigo);color:#fff;text-decoration:none;display:inline-block;transition:transform .15s}
+.btn:active{transform:scale(.96)}
+.btn.sun{background:var(--maiz);color:var(--ink)}.btn.ok{background:var(--menta);color:#2a1200}.btn.wa{background:#25d366;color:#04281e}.btn.ghost{background:transparent;color:var(--indigo);border:2px solid var(--indigo)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+section{padding:56px 0}
+header{position:sticky;top:0;z-index:20;background:var(--indigo);color:#fff;padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;gap:12px;min-height:68px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;color:#fff;text-decoration:none;margin-right:auto}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{color:#fff;text-decoration:none;padding:.4em .8em;border-radius:999px;font-weight:600}
+nav a:hover{background:rgba(255,255,255,.18)}
+#cartBtn{position:relative}
+#cartCount{background:var(--guayaba);color:#fff;border-radius:999px;padding:0 .5em;margin-left:.3em;font-size:.9rem}
+@media(max-width:700px){nav{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px}nav a{white-space:nowrap}}
+.hero{display:grid;gap:32px;grid-template-columns:1.1fr .9fr;align-items:center}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+.hero p{font-size:1.15rem;max-width:34em}
+.quilt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;transform:rotate(-3deg)}
+.quilt div{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;font-size:clamp(2rem,8vw,3.4rem);border:3px dashed rgba(29,27,58,.35)}
+.quilt div:nth-child(even){border-style:solid}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.2em}
+.how{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.how div{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:18px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.tools input,.tools select,.f input,.f select,.f textarea{border:2px solid var(--line);border-radius:12px;padding:.65em .9em;background:#fff;width:100%}
+.tools input{flex:1 1 220px;width:auto}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:2px solid var(--indigo);background:#fff;color:var(--indigo);border-radius:999px;padding:.35em 1em;font-weight:700;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--indigo);color:#fff}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;border:2px solid var(--line);display:flex;flex-direction:column}
+.art{aspect-ratio:4/3;display:grid;place-items:center;font-size:4.2rem}
+.card .b{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card small{color:#5b5348}
+.price{font-size:1.3rem;font-weight:800;color:var(--indigo)}
+.card .btn{margin-top:auto}
+.empty{padding:30px;text-align:center;background:#fff;border:2px dashed var(--line);border-radius:var(--r)}
+.tbl{overflow-x:auto;background:#fff;border:2px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{padding:.7em 1em;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#fdebd6}
+.sum{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.sum div{flex:1 1 160px;background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:12px 16px}
+.sum b{display:block;font-size:1.5rem}
+.f{display:grid;gap:12px;max-width:560px}
+.f label{font-weight:700;display:grid;gap:4px}
+.rev{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:20px}
+.rev blockquote{margin:0;background:#fff;border-left:8px solid var(--maiz);border-radius:12px;padding:14px 16px}
+.stars{color:#e69b00;letter-spacing:2px}
+.alt{background:#fdebd6}
+footer{background:var(--ink);color:#f3ece2;padding:40px 0 30px}
+footer a{color:var(--maiz)}
+.foot{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+aside{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:#fff;z-index:40;transform:translateX(105%);transition:transform .25s;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.25)}
+aside.open{transform:none}
+aside .hd{display:flex;justify-content:space-between;align-items:center;padding:16px;background:var(--indigo);color:#fff}
+aside .hd h2{margin:0;font-size:1.4rem}
+#items{flex:1;overflow:auto;padding:12px 16px}
+.it{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.it span:first-child{font-size:2rem}.it div{flex:1}
+.q{display:flex;align-items:center;gap:6px}
+.q button{width:34px;height:34px;border-radius:50%;border:2px solid var(--indigo);background:#fff;font-weight:800;cursor:pointer}
+.pay{padding:16px;border-top:2px solid var(--line);display:grid;gap:10px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,150%);background:var(--ink);color:#fff;padding:.8em 1.4em;border-radius:999px;z-index:60;transition:transform .25s;max-width:90%;text-align:center}
+.toast.show{transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+ <a class="brand" href="#inicio" aria-label="Manos Unidas, inicio">
+  <svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#ffc23d"/><path d="M24 38C12 29 9 22 9 17.5 9 13 12.5 10 16.5 10c3 0 5.5 1.7 7.5 4.5C26 11.700 28.500 10 31.500 10 35.500 10 39 13 39 17.500 39 22 36 29 24 38Z" fill="#e4572e"/><path d="M24 14.500 24 38" stroke="#0f6b6b" stroke-width="3" stroke-dasharray="3 3"/></svg>
+  Manos Unidas</a>
+ <nav aria-label="Menú principal"><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#cuentas">Cuentas</a><a href="#opiniones">Opiniones</a><a href="#contacto">Contacto</a></nav>
+ <button class="btn ghost" id="installBtn" hidden style="color:#fff;border-color:#fff">Instalar app</button>
+ <button class="btn sun" id="cartBtn" aria-label="Abrir carrito">🛒 Mi pedido<span id="cartCount">0</span></button>
+</div></header>
+
+<main>
+<section id="inicio"><div class="wrap hero">
+ <div>
+  <h1>Lo hecho a mano en Manzanares, ahora en tu celular.</h1>
+  <p>Una tiendita digital donde estudiantes, vecinos y mamás emprendedoras venden artesanías, tareas de arte y objetos en buen estado. Quien vende gana, y lo que se recauda se reparte de forma justa.</p>
+  <div class="row"><a class="btn ok" href="#catalogo">Ver catálogo</a><a class="btn ghost" href="#contacto">Quiero vender</a></div>
+ </div>
+ <div class="quilt" aria-hidden="true">
+  <div style="background:#ffc23d">🧶</div><div style="background:#ffb48f">🎨</div><div style="background:#a6e0d2">🌿</div>
+  <div style="background:#cfe8ee">📿</div><div style="background:#ffc23d">🤝</div><div style="background:#ffb48f">🕯️</div>
+  <div style="background:#a6e0d2">📚</div><div style="background:#cfe8ee">👜</div><div style="background:#ffc23d">💛</div>
+ </div>
+</div>
+<div class="wrap" style="margin-top:40px"><div class="how">
+ <div><h3>Vendes sin local</h3><p>Publicamos tus productos con foto y precio. Tú los haces, nosotros los mostramos.</p></div>
+ <div><h3>Pedidos por WhatsApp</h3><p>El cliente arma su pedido y te lo envía por WhatsApp, donde la gente pregunta y paga.</p></div>
+ <div><h3>Cuentas claras</h3><p>Cada venta queda anotada: cuánto se vendió y cuánto le toca a cada uno.</p></div>
+</div></div></section>
+
+<section id="catalogo" class="alt"><div class="wrap">
+ <h2>Catálogo</h2>
+ <div class="tools">
+  <input id="q" type="search" placeholder="Buscar: bufanda, cuadro, vela…" aria-label="Buscar productos">
+  <select id="sort" aria-label="Ordenar"><option value="">Ordenar</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select>
+ </div>
+ <div class="chips" id="chips" role="group" aria-label="Categorías"></div>
+ <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="cuentas"><div class="wrap">
+ <h2>Cuentas de vendedores</h2>
+ <p>Cada pedido que se confirma se anota aquí. La plataforma cobra una cuota por vender; el resto es para quien vende.</p>
+ <div class="f" style="max-width:300px"><label>Cuota de la plataforma (%)<input id="fee" type="number" min="0" max="50" value="10"></label></div>
+ <div class="sum" id="sum"></div>
+ <div class="tbl"><table><thead><tr><th>Vendedor</th><th>Unidades</th><th>Vendido</th><th>Cuota</th><th>Le toca</th></tr></thead><tbody id="acc"></tbody></table></div>
+ <p style="margin-top:14px"><button class="btn ghost" id="resetSales">Borrar ventas de prueba</button></p>
+</div></section>
+
+<section id="opiniones" class="alt"><div class="wrap">
+ <h2>Opiniones de clientes</h2>
+ <form class="f" id="revForm">
+  <label>Tu nombre o apodo<input name="n" required maxlength="30"></label>
+  <label>Calificación<select name="s"><option value="5">★★★★★ Excelente</option><option value="4">★★★★ Muy bueno</option><option value="3">★★★ Bueno</option><option value="2">★★ Regular</option><option value="1">★ Malo</option></select></label>
+  <label>Tu opinión<textarea name="t" rows="3" required maxlength="200"></textarea></label>
+  <button class="btn" type="submit">Publicar opinión</button>
+ </form>
+ <div class="rev" id="revs"></div>
+</div></section>
+
+<section id="contacto"><div class="wrap">
+ <h2>Contacto</h2>
+ <p>¿Quieres vender con nosotros o tienes una pregunta? Escríbenos.</p>
+ <form class="f" id="cForm">
+  <label>Nombre<input name="n" required maxlength="40"></label>
+  <label>Motivo<select name="m"><option>Quiero vender mis productos</option><option>Tengo una pregunta</option><option>Quiero una alianza o publicidad</option></select></label>
+  <label>Mensaje<textarea name="t" rows="4" required maxlength="300"></textarea></label>
+  <button class="btn" type="submit">Enviar mensaje</button>
+ </form>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+ <div><h3>Manos Unidas App</h3><p>Proyecto de Emprendimiento Digital. Institución Educativa El Rosario, Manzanares, Caldas, con la Universidad de Caldas.</p></div>
+ <div><h3>Dónde nos encuentras</h3><p>Facebook: grupos de la comunidad<br>WhatsApp: estados y grupos<br>Instagram y TikTok: @manosunidas (ejemplo)</p></div>
+ <div><h3>Economía solidaria</h3><p>Reparto justo, apoyo a compañeros y aprender a emprender en equipo.</p><p><small>Datos de ejemplo guardados solo en este dispositivo.</small></p></div>
+</div></footer>
+
+<aside id="cart" aria-label="Carrito">
+ <div class="hd"><h2>Mi pedido</h2><button class="btn sun" id="closeCart">Cerrar</button></div>
+ <div id="items"></div>
+ <div class="pay">
+  <b id="total"></b>
+  <input id="cname" placeholder="Tu nombre" maxlength="40" aria-label="Tu nombre">
+  <button class="btn wa" id="wa">Enviar por WhatsApp</button>
+  <button class="btn ghost" id="sim">Solicitud simulada (prueba)</button>
+ </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const load=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+Math.round(n).toLocaleString('es-CO');
+const WA_NUMBER='573000000000'; // CAMBIA por el número real de WhatsApp del grupo (con 57 al inicio)
+
+const P=[
+ {id:1,n:'Bufanda tejida a crochet',c:'Tejidos',p:28000,s:'Taller Las Tejedoras',e:'🧶',bg:'#ffb48f'},
+ {id:2,n:'Cuadro en acuarela de paisaje cafetero',c:'Arte escolar',p:35000,s:'Colectivo Arte 10°',e:'🎨',bg:'#cfe8ee'},
+ {id:3,n:'Pulsera de chaquira',c:'Artesanías',p:8000,s:'Manos de Rosario',e:'📿',bg:'#ffc23d'},
+ {id:4,n:'Vela aromática artesanal',c:'Artesanías',p:12000,s:'Velas El Mirador',e:'🕯️',bg:'#a6e0d2'},
+ {id:5,n:'Matera de material reciclado',c:'Reciclado',p:15000,s:'Eco Estudiantes',e:'🌿',bg:'#a6e0d2'},
+ {id:6,n:'Cuadernos decorados a mano',c:'Arte escolar',p:9000,s:'Colectivo Arte 10°',e:'📚',bg:'#ffc23d'},
+ {id:7,n:'Bolso de tela reutilizada',c:'Reciclado',p:22000,s:'Eco Estudiantes',e:'👜',bg:'#ffb48f'},
+ {id:8,n:'Llaveros en arcilla',c:'Artesanías',p:5000,s:'Manos de Rosario',e:'🔑',bg:'#cfe8ee'}
+];
+let cart=load('mu_cart',{}),sales=load('mu_sales',[]),reviews=load('mu_reviews',[
+ {n:'Cliente de ejemplo',s:5,t:'La bufanda quedó hermosa y el pedido fue muy fácil.'},
+ {n:'Vecina de ejemplo',s:4,t:'Me gusta que lo que pago le llegue a los muchachos.'}]);
+let cat='Todos';
+const cats=['Todos',...new Set(P.map(x=>x.c))];
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2600)}
+
+function chips(){$('#chips').innerHTML=cats.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${esc(c)}">${esc(c)}</button>`).join('')}
+function catalog(){
+ const q=$('#q').value.trim().toLowerCase(),o=$('#sort').value;
+ let l=P.filter(x=>(cat==='Todos'||x.c===cat)&&(x.n+x.s+x.c).toLowerCase().includes(q));
+ if(o)l.sort((a,b)=>o==='asc'?a.p-b.p:b.p-a.p);
+ $('#grid').innerHTML=l.length?l.map(x=>`<article class="card"><div class="art" style="background:${x.bg}" aria-hidden="true">${x.e}</div><div class="b"><small>${esc(x.c)}</small><h3>${esc(x.n)}</h3><small>Vende: ${esc(x.s)}</small><span class="price">${money(x.p)}</span><button class="btn ok" data-add="${x.id}">Agregar al pedido</button></div></article>`).join(''):'<div class="empty" style="grid-column:1/-1">No encontramos ese producto. Prueba con otra palabra o elige "Todos".</div>';
+}
+function renderCart(){
+ const ids=Object.keys(cart).filter(i=>cart[i]>0);let tot=0,n=0;
+ $('#items').innerHTML=ids.length?ids.map(i=>{const x=P.find(p=>p.id==i);tot+=x.p*cart[i];n+=cart[i];return `<div class="it"><span>${x.e}</span><div><b>${esc(x.n)}</b><br><small>${money(x.p)} · ${esc(x.s)}</small></div><div class="q"><button data-m="${i}" aria-label="Quitar uno">−</button><b>${cart[i]}</b><button data-p="${i}" aria-label="Agregar uno">+</button></div></div>`}).join(''):'<div class="empty">Tu pedido está vacío. Agrega productos desde el catálogo.</div>';
+ $('#total').textContent='Total: '+money(tot);$('#cartCount').textContent=n;save('mu_cart',cart);
+}
+function checkout(wa){
+ const ids=Object.keys(cart).filter(i=>cart[i]>0),name=$('#cname').value.trim();
+ if(!ids.length){toast('Agrega al menos un producto.');return}
+ if(!name){toast('Escribe tu nombre para continuar.');$('#cname').focus();return}
+ const d=new Date().toLocaleDateString('es-CO');let lines=[],tot=0;
+ ids.forEach(i=>{const x=P.find(p=>p.id==i),t=x.p*cart[i];tot+=t;lines.push(`• ${cart[i]} x ${x.n} (${money(t)})`);sales.push({d,s:x.s,n:x.n,q:cart[i],t})});
+ save('mu_sales',sales);
+ if(wa){const msg=`Hola, soy ${name}. Quiero hacer este pedido en Manos Unidas:\n${lines.join('\n')}\nTotal: ${money(tot)}`;window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank')}
+ cart={};renderCart();accounts();$('#cart').classList.remove('open');
+ toast(wa?'Pedido anotado. Termínalo en WhatsApp.':'Solicitud simulada guardada en Cuentas.');
+}
+function accounts(){
+ const f=Math.min(50,Math.max(0,+$('#fee').value||0))/100,by={};
+ sales.forEach(v=>{const a=by[v.s]||(by[v.s]={u:0,t:0});a.u+=v.q;a.t+=v.t});
+ const rows=Object.entries(by);let T=0;rows.forEach(r=>T+=r[1].t);
+ $('#acc').innerHTML=rows.length?rows.map(([s,a])=>`<tr><td>${esc(s)}</td><td>${a.u}</td><td>${money(a.t)}</td><td>${money(a.t*f)}</td><td><b>${money(a.t*(1-f))}</b></td></tr>`).join(''):'<tr><td colspan="5">Aún no hay ventas. Haz un pedido de prueba y aparecerá aquí.</td></tr>';
+ $('#sum').innerHTML=`<div>Total vendido<b>${money(T)}</b></div><div>Ganancia de la plataforma<b>${money(T*f)}</b></div><div>Para vendedores<b>${money(T*(1-f))}</b></div>`;
+}
+function revs(){$('#revs').innerHTML=reviews.map(r=>`<blockquote><div class="stars" aria-label="${r.s} de 5">${'★'.repeat(r.s)}${'☆'.repeat(5-r.s)}</div>${esc(r.t)}<br><small>— ${esc(r.n)}</small></blockquote>`).join('')}
+
+$('#chips').onclick=e=>{const b=e.target.closest('[data-c]');if(b){cat=b.dataset.c;chips();catalog()}};
+$('#grid').onclick=e=>{const b=e.target.closest('[data-add]');if(b){cart[b.dataset.add]=(cart[b.dataset.add]||0)+1;renderCart();toast('Agregado al pedido')}};
+$('#items').onclick=e=>{const m=e.target.dataset.m,p=e.target.dataset.p;if(m)cart[m]=Math.max(0,cart[m]-1);if(p)cart[p]++;if(m||p)renderCart()};
+$('#q').oninput=catalog;$('#sort').onchange=catalog;$('#fee').oninput=accounts;
+$('#cartBtn').onclick=()=>$('#cart').classList.add('open');
+$('#closeCart').onclick=()=>$('#cart').classList.remove('open');
+$('#wa').onclick=()=>checkout(true);$('#sim').onclick=()=>checkout(false);
+$('#resetSales').onclick=()=>{if(confirm('¿Borrar todas las ventas de prueba?')){sales=[];save('mu_sales',sales);accounts()}};
+$('#revForm').onsubmit=e=>{e.preventDefault();const f=e.target;reviews.unshift({n:f.n.value.trim(),s:+f.s.value,t:f.t.value.trim()});save('mu_reviews',reviews);revs();f.reset();toast('Gracias por tu opinión')};
+$('#cForm').onsubmit=e=>{e.preventDefault();const f=e.target,m=load('mu_msgs',[]);m.push({n:f.n.value.trim(),m:f.m.value,t:f.t.value.trim(),d:new Date().toISOString()});save('mu_msgs',m);f.reset();toast('Mensaje guardado. Te responderemos pronto.')};
+
+let dp;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('#installBtn').hidden=false});
+$('#installBtn').onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$('#installBtn').hidden=true}};
+if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone){setTimeout(()=>toast('En iPhone: toca Compartir y luego "Agregar a pantalla de inicio".'),3000)}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+
+chips();catalog();renderCart();accounts();revs();
+</script>
+</body>
+</html>
